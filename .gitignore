@@ -1,7 +1,14 @@
 node_modules
 dist
+yarn-error.log
+tsconfig.tsbuildinfo
+django_iam.egg-info
+__pycache__
+
 .env
 .env.*
 
 # Serverless directories
 .serverless/
+venv
+*.cpython*

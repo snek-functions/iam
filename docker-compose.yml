@@ -2,8 +2,33 @@ version: '3.1'
 
 services:
 
-#> Snek Function
-  app:
-    build: .
-    ports:
-      - "3000:4000/tcp"
+#> PostgreSQL
+    db:
+        image: postgres:14-alpine
+        environment:
+            - POSTGRES_DB=app_db
+            - POSTGRES_USER=app_user
+            - POSTGRES_PASSWORD=changeme
+            - POSTGRES_PORT=5432
+        restart: always
+
+#> Django
+    app:
+        build:
+            context: .
+        environment:
+            - DJANGO_SECRET_KEY=changeme
+            - POSTGRES_HOST=db
+            - POSTGRES_DB=app_db
+            - POSTGRES_USER=app_user
+            - POSTGRES_PASSWORD=changeme
+            - POSTGRES_PORT=5432
+        links:
+            - db:db
+        ports:
+            - 8000:8000/tcp
+        depends_on:
+            - db
+
+# SPDX-License-Identifier: (EUPL-1.2)
+# Copyright © 2022 snek.at

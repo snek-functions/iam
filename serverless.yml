@@ -11,12 +11,19 @@ custom:
     - If: '"${self:custom.isOffline}" != "true"'
       Exclude:
         - functions.endpoint.handler
+        - provider.environment.DJANGO_DEBUG
       ElseExclude:
         - functions.endpoint.image
 
 provider:
   name: aws
   region: eu-central-1
+  environment:
+    - DJANGO_DEBUG=on
+    - POSTGRES_DB=app_db
+    - POSTGRES_USER=app_user
+    - POSTGRES_PASSWORD=changeme
+    - POSTGRES_PORT=5432
 
   ecr:
     images:
@@ -34,3 +41,4 @@ functions:
       - httpApi:
           path: '*'
           method: '*'
+
