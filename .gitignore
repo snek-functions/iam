@@ -4,6 +4,7 @@ yarn-error.log
 tsconfig.tsbuildinfo
 django_iam.egg-info
 __pycache__
+db.sqlite3
 
 .env
 .env.*
