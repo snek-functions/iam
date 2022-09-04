@@ -1,7 +1,7 @@
 {
   "name": "@snek-functions/iam",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.2",
+  "private": false,
   "type": "module",
   "description": "Generated with `snek-functions init`",
   "author": "snek-at",
