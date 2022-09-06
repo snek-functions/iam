@@ -48,7 +48,9 @@ AUTH_USER_MODEL = 'user.User'
 # Default primary key field type to use for models that don’t have a field
 # with primary_key=True.
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-DEFAULT_AUTO_FIELD='django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DUCKDB_DATA_PATH = env.get("DUCKDB_DATA_PATH", "/var/duckdb")
 
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2022 snek.at

@@ -36,7 +36,7 @@ SECRET_KEY = "ct*z11t*ns876z)!f5f3h1byn7pp1ma5i!9*oo!=dmtmnrvzcn"
 # > Allowed Hosts
 # Accept all hostnames, since we don't know in advance.
 # See https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["*",]
+ALLOWED_HOSTS = ["*", ]
 
 # > CORS Origin
 # If True, the whitelist will not be used and all origins will be accepted.
@@ -119,7 +119,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # https://docs.djangoproject.com/en/stable/ref/settings/#static-url
 STATIC_URL = "/static/"
 
-CSRF_TRUSTED_ORIGINS = ['https://kleberbaum-schett-net-snek-0-r66qp7v4hx4rw-8000.githubpreview.dev']
+CSRF_TRUSTED_ORIGINS = [
+    'https://kleberbaum-schett-net-snek-0-r66qp7v4hx4rw-8000.githubpreview.dev']
 
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2022 snek.at

@@ -1,30 +1,28 @@
-import { fn, sendToProxy } from "./factory";
-
-interface User {
-  id: string;
-  email: string;
-  password: string;
-  fullName: string;
-  createdAt: string;
-  isActive: boolean;
-}
+import {fn, sendToProxy} from './factory'
+import {IUser} from './interfaces'
 
 const usersAdd = fn<
   {
-    email: string;
-    password: string;
+    email: string
+    password: string
   },
-  User
+  IUser
 >(
   async (args, snekApi) => {
-    console.log("args", args);
+    console.log('args', args)
 
-    return sendToProxy("usersAdd", args);
+    const res: IUser = await sendToProxy('usersAdd', args)
+
+    if (res?.userId == undefined) {
+      throw new Error('UNIQUE constraint failed')
+    }
+
+    return res
   },
   {
-    name: "usersAdd",
-    decorators: [],
+    name: 'usersAdd',
+    decorators: []
   }
-);
+)
 
-export default usersAdd;
+export default usersAdd

@@ -2,13 +2,13 @@
 Setup the proxy handler with `python3 -m django_iam.proxy_handler`
 """
 
-from .proxy import ProxyServer, ProxyMessage
 from .init import init_django
+from .proxy import ProxyMessage, ProxyServer
 
 
 def function_handler(message: ProxyMessage):
-    from .user.models import User, Alias
     from .export import export
+    from .user.models import Alias, User
 
     if message.fnName == 'usersAdd':
         email = message.data.get("email")
@@ -42,22 +42,30 @@ def function_handler(message: ProxyMessage):
     elif message.fnName == 'usersDelete':
         user_id = message.data.get("userId")
 
-        if(User.objects.get(pk=user_id).delete()):
+        if (User.objects.get(pk=user_id).delete()):
             return f"Successfully deleted user {user_id}"
 
+    elif message.fnName == 'aliasAvailable':
+        user_alias = message.data.get("alias")
+
+        if (Alias.objects.filter(alias=user_alias).exists()):
+            return False
+
+        return True
+
     elif message.fnName == 'usersUpdate':
-        user_id=message.data.get("userId")
-        first_name=message.data.get("firstName")
-        last_name=message.data.get("lastName")
-        is_active=message.data.get("isActive")=="true"
+        user_id = message.data.get("userId")
+        first_name = message.data.get("firstName")
+        last_name = message.data.get("lastName")
+        is_active = message.data.get("isActive") == "true"
 
         print(last_name)
-        user=User.objects.get(pk=user_id)
-        #user.is_active=True,
-        #user.save()
+        user = User.objects.get(pk=user_id)
+        # user.is_active=True,
+        # user.save()
 
-        user.details.first_name=first_name
-        user.details.last_name=last_name
+        user.details.first_name = first_name or ""
+        user.details.last_name = last_name or ""
         user.details.save()
 
         return {
@@ -71,7 +79,7 @@ def function_handler(message: ProxyMessage):
 
     elif message.fnName == 'usersGet':
         qs = User.objects.all()
-    
+
         return [{
             "userId": user.pk,
             "email": user.email,

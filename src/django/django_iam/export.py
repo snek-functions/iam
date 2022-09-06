@@ -1,8 +1,8 @@
-from django.conf import settings
 import duckdb
+from django.conf import settings
+
 
 def export():
-    DB_DIRECTORY = "/tmp"
     con = duckdb.connect(':memory:')
 
     if settings.DEBUG:
@@ -15,7 +15,6 @@ def export():
         print(f"CALL POSTGRES_ATTACH('{settings.POSTGRES_URL}');")
         con.execute(f"CALL POSTGRES_ATTACH('{settings.POSTGRES_URL}');")
         #con.execute("CALL postgres_scanner('?::STRING');", (settings.POSTGRES_URL,))
-
 
     # Create a table with all user for authentication.
     # Format:
@@ -77,9 +76,10 @@ def export():
     alias = con.fetchall()
     con.execute("SELECT * FROM _permission;")
     permission = con.fetchall()
-    
+
     #con.execute("SHOW TABLES;")
-    con.execute(f"EXPORT DATABASE '{DB_DIRECTORY}' (FORMAT PARQUET, CODEC 'SNAPPY')")
+    con.execute(
+        f"EXPORT DATABASE '{settings.DUCKDB_DATA_PATH}' (FORMAT PARQUET, CODEC 'SNAPPY')")
 
     return (user, alias, permission)
 

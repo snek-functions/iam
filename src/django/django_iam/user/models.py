@@ -1,8 +1,10 @@
 import django.contrib.auth.validators
-from django.utils import timezone
-from django.db import models
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin as DjangoPermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import \
+    PermissionsMixin as DjangoPermissionsMixin
+from django.db import models
+from django.utils import timezone
 
 
 class PermissionsMixin(DjangoPermissionsMixin):
@@ -132,7 +134,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Custom save function
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
-        
+
         alias = Alias(user=self, alias=self.email)
         alias.save()
 
@@ -155,8 +157,9 @@ class Alias(models.Model):
     user = models.ForeignKey(
         User, related_name="aliases", on_delete=models.CASCADE)
 
-    # Custom save function
+    objects = models.Manager()
 
+    # Custom save function
     def save(self, *args, **kwargs):
         super(Alias, self).save(*args, **kwargs)
 
@@ -165,10 +168,10 @@ class Alias(models.Model):
 
 
 class Details(models.Model):
-    user = models.OneToOneField(User, related_name="details", on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, related_name="details", on_delete=models.CASCADE)
     first_name = models.CharField("first name", max_length=150, blank=True)
     last_name = models.CharField("last name", max_length=150, blank=True)
 
 # SPDX-License-Identifier: (EUPL-1.2)
 # Copyright © 2022 snek.at
-

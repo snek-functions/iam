@@ -1,33 +1,33 @@
-import { fn, sendToProxy } from "./factory";
-
-interface User {
-  id: string;
-  email: string;
-  password: string;
-  fullName: string;
-  createdAt: string;
-  isActive: boolean;
-}
+import {fn, sendToProxy} from './factory'
+import {IUser} from './interfaces'
 
 const usersUpdate = fn<
   {
-    email: string;
-    password: string;
+    userId: string
+    email: string
+    password?: string
     firstName?: string
     lastName?: string
     isActive?: boolean
   },
-  User
+  IUser
 >(
   async (args, snekApi) => {
-    console.log("args", args);
+    console.log('args', args)
+    const res: IUser = await sendToProxy('usersUpdate', args)
 
-    return sendToProxy("usersUpdate", args);
+    if (res?.userId == undefined) {
+      throw new Error('Oh no! Something has gone wrong.')
+    }
+
+    await sendToProxy('publishAuth', args)
+
+    return res
   },
   {
-    name: "usersUpdate",
-    decorators: [],
+    name: 'usersUpdate',
+    decorators: []
   }
-);
+)
 
-export default usersUpdate;
+export default usersUpdate
