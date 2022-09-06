@@ -11,10 +11,7 @@ https://docs.djangoproject.com/en/stable/howto/deployment/checklist/
 import random
 import string
 
-# import dj_database_url
-# import django_cache_url
-
-from .base import * # noqa
+from .base import *  # noqa
 
 # > Debug Switch
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -26,7 +23,8 @@ DEBUG = env.get("DJANGO_DEBUG", "off") == "on"
 # SECURITY WARNING: don't run with debug turned on in production!
 # IMPORTANT: Specified in the environment or set to default (off).
 # See https://docs.djangoproject.com/en/stable/ref/settings/#debug
-DEBUG_PROPAGATE_EXCEPTIONS = env.get("DJANGO_DEBUG_PROPAGATE_EXCEPTIONS", "off") == "on"
+DEBUG_PROPAGATE_EXCEPTIONS = env.get(
+    "DJANGO_DEBUG_PROPAGATE_EXCEPTIONS", "off") == "on"
 
 # This is used by Wagtail's email notifications for constructing absolute
 # URLs. Please set to the domain that users will access the admin site.

@@ -19,11 +19,13 @@ provider:
   name: aws
   region: eu-central-1
   environment:
-    - DJANGO_DEBUG=on
-    - POSTGRES_DB=app_db
-    - POSTGRES_USER=app_user
-    - POSTGRES_PASSWORD=changeme
-    - POSTGRES_PORT=5432
+    DJANGO_DEBUG: 'on'
+    POSTGRES_DB: app_db
+    POSTGRES_USER: app_user
+    POSTGRES_PASSWORD: changeme
+    POSTGRES_PORT: 5432
+    ENDPOINT_URL_IAM: ${env:ENDPOINT_URL_IAM, ""}
+    DUCKDB_DATA_PATH: '/var/duckdb'
 
   ecr:
     images:
@@ -41,4 +43,3 @@ functions:
       - httpApi:
           path: '*'
           method: '*'
-

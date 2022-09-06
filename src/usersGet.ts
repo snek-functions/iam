@@ -1,26 +1,21 @@
-import { fn, sendToProxy } from "./factory";
+import {fn, sendToProxy} from './factory'
+import {IReducedUser} from './interfaces'
 
-interface User {
-  id: string;
-  email: string;
-  password: string;
-  fullName: string;
-  createdAt: string;
-  isActive: boolean;
-}
-
-type ReducedUser = Omit<User, 'password'>
-
-const usersGet = fn<void, ReducedUser[]>(
+const usersGet = fn<void, IReducedUser[]>(
   async (args, snekApi) => {
-    console.log("args", args);
+    console.log('args', args)
+    const res: IReducedUser[] = await sendToProxy('usersGet', args)
 
-    return sendToProxy("usersGet", args);
+    if (!Array.isArray(res)) {
+      throw new Error('Oh no! Something has gone wrong.')
+    }
+
+    return res
   },
   {
-    name: "usersGet",
-    decorators: [],
+    name: 'usersGet',
+    decorators: []
   }
-);
+)
 
-export default usersGet;
+export default usersGet
