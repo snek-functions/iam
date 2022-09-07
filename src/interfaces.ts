@@ -7,4 +7,11 @@ export interface IUser {
   isActive: boolean
 }
 
+export interface IUserDataToken {
+  username: string
+  firstname: string
+  lastname: string
+  email: string
+}
+
 export interface IReducedUser extends Omit<IUser, 'password'> {}
