@@ -92,6 +92,17 @@ def function_handler(message: ProxyMessage):
     elif message.fnName == 'publishAuth':
         return export()
 
+    elif message.fnName == 'userGet':
+        user = User.objects.get(pk=message.data.get("userId"))
+        alias = Alias.objects.get(user=user)
+
+        return{
+            "userId": user.pk,
+            "username": alias.alias,
+            "firstName": user.details.first_name,
+            "lastName": user.details.last_name,
+            "email": user.email
+        }
     return 'Unknown function'
 
 
