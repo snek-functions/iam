@@ -96,12 +96,13 @@ def function_handler(message: ProxyMessage):
         user = User.objects.get(pk=message.data.get("userId"))
         alias = Alias.objects.get(user=user)
 
-        return{
+        return {
             "userId": user.pk,
-            "username": alias.alias,
+            "email": user.email,
             "firstName": user.details.first_name,
             "lastName": user.details.last_name,
-            "email": user.email
+            "isActive": user.is_active,
+            "createdAt": str(user.date_joined)
         }
     return 'Unknown function'
 
