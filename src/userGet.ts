@@ -1,10 +1,10 @@
 import {fn, sendToProxy} from './factory'
-import {IUserDataToken} from './interfaces'
+import {IReducedUser} from './interfaces'
 
-const userGet = fn<void, IUserDataToken>(
+const userGet = fn<{}, IReducedUser>(
   async (args, snekApi) => {
     console.log('args', args)
-    const res: IUserDataToken = await sendToProxy('userGet', args)
+    const res: IReducedUser = await sendToProxy('userGet', args)
     return res
   },
   {
