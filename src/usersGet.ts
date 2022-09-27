@@ -1,7 +1,7 @@
 import {fn, sendToProxy} from './factory'
 import {IReducedUser} from './interfaces'
 
-const usersGet = fn<void, IReducedUser[]>(
+const usersGet = fn<{}, IReducedUser[]>(
   async (args, snekApi) => {
     console.log('args', args)
     const res: IReducedUser[] = await sendToProxy('usersGet', args)
