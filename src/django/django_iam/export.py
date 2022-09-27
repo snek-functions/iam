@@ -1,25 +1,40 @@
 import duckdb
+import pandas as pd
+from sqlalchemy import create_engine
 from django.conf import settings
 
-
 def export():
-    con = duckdb.connect(':memory:')
+    # Create an engine instance
+    alchemyEngine = create_engine(settings.POSTGRESQL_URL, pool_recycle=3600)
 
-    if settings.DEBUG:
-        con.execute("INSTALL 'sqlite_scanner';")
-        con.execute("LOAD 'sqlite_scanner';")
-        con.execute(f"CALL sqlite_attach('{settings.SQLITE_PATH}');")
-    else:
-        con.execute("INSTALL 'postgres_scanner';")
-        con.execute("LOAD 'postgres_scanner';")
-        print(f"CALL POSTGRES_ATTACH('{settings.POSTGRES_URL}');")
-        con.execute(f"CALL POSTGRES_ATTACH('{settings.POSTGRES_URL}');")
-        #con.execute("CALL postgres_scanner('?::STRING');", (settings.POSTGRES_URL,))
+    # Connect to PostgreSQL server
+    dbConnection = alchemyEngine.connect()
+
+    # Read data from PostgreSQL database tables and load into a DataFrame instance
+    user_user = pd.read_sql(
+        "SELECT permissionsmixin_ptr_id, password FROM user_user", dbConnection)
+    user_alias = pd.read_sql(
+        "SELECT alias, user_id FROM user_alias", dbConnection)
+    permission_permission = pd.read_sql(
+        "SELECT * FROM permission_permission", dbConnection)
+    user_permissionsmixin_user_permissions = pd.read_sql(
+        "SELECT * FROM user_permissionsmixin_user_permissions", dbConnection)
+    group_group_permissions = pd.read_sql(
+        "SELECT * FROM group_group_permissions", dbConnection)
+    user_permissionsmixin_groups = pd.read_sql(
+        "SELECT * FROM user_permissionsmixin_groups", dbConnection)
+
+    # Close the database connection
+    dbConnection.close()
+
+
+    # Create DuckDB Connection
+    con = duckdb.connect(':memory:')
 
     # Create a table with all user for authentication.
     # Format:
     # user_id | password |
-    # INTEGER | VARCHAR  |
+    # UUID    | VARCHAR  |
     con.execute(" \
         CREATE TABLE '_user' AS \
         SELECT permissionsmixin_ptr_id as user_id, \
@@ -31,11 +46,11 @@ def export():
     # Create table with all alias and associated user for authentication.
     # Format:
     # user_id | alias   |
-    # INTEGER | VARCHAR |
+    # UUID    | VARCHAR |
     con.execute(" \
         CREATE TABLE '_alias' AS \
-        SELECT alias, \
-            user_id \
+        SELECT user_id, \
+            alias \
         FROM user_alias \
         ORDER BY user_id \
     ")
@@ -44,7 +59,7 @@ def export():
     # for authorization.
     # Format:
     # user_id | permission_id | permission_name | ressources_id
-    # INTEGER | INTEGER       | VARCHAR         | INTEGER
+    # UUID    | INTEGER       | VARCHAR         | INTEGER
     con.execute(" \
         CREATE TABLE '_permission' AS \
         SELECT permissionsmixin_id AS user_id,\
@@ -69,7 +84,6 @@ def export():
         ORDER BY user_id \
     ")
 
-    con.execute("PRAGMA show('_permission');")
     con.execute("SELECT * FROM _user;")
     user = con.fetchall()
     con.execute("SELECT * FROM _alias;")
@@ -77,7 +91,6 @@ def export():
     con.execute("SELECT * FROM _permission;")
     permission = con.fetchall()
 
-    #con.execute("SHOW TABLES;")
     con.execute(
         f"EXPORT DATABASE '{settings.DUCKDB_DATA_PATH}' (FORMAT PARQUET, CODEC 'SNAPPY')")
 
