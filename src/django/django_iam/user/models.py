@@ -1,3 +1,4 @@
+import uuid
 import django.contrib.auth.validators
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
@@ -12,7 +13,7 @@ class PermissionsMixin(DjangoPermissionsMixin):
     Add the fields and methods necessary to support the Group and Permission
     models using the ModelBackend.
     """
-
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     is_superuser = None
     groups = models.ManyToManyField(
         "group.Group",
