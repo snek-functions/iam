@@ -26,12 +26,12 @@ def function_handler(message: ProxyMessage):
         user.save()
 
         # data = {
-        #     "id": user.pk,
+        #     "id": str(user.pk),
         #     "name": user.email
         # }
 
         return {
-            "userId": user.pk,
+            "userId": str(user.pk),
             "email": user.email,
             "firstName": user.details.first_name,
             "lastName": user.details.first_name,
@@ -69,7 +69,7 @@ def function_handler(message: ProxyMessage):
         user.details.save()
 
         return {
-            "userId": user.pk,
+            "userId": str(user.pk),
             "email": user.email,
             "firstName": user.details.first_name,
             "lastName": user.details.last_name,
@@ -81,7 +81,7 @@ def function_handler(message: ProxyMessage):
         qs = User.objects.all()
 
         return [{
-            "userId": user.pk,
+            "userId": str(user.pk),
             "email": user.email,
             "firstName": user.details.first_name,
             "lastName": user.details.last_name,
@@ -97,7 +97,7 @@ def function_handler(message: ProxyMessage):
         alias = Alias.objects.get(user=user)
 
         return {
-            "userId": user.pk,
+            "userId": str(user.pk),
             "email": user.email,
             "firstName": user.details.first_name,
             "lastName": user.details.last_name,
