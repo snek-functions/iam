@@ -17,8 +17,8 @@ if [ $# -ne 1 ]; then
   # Migrate database for deployment.
   # $LAMBDA_TASK_ROOT/venv/bin/python django_iam/manage.py migrate --noinput
 
-  $LAMBDA_TASK_ROOT/venv/bin/python -m django_iam.proxy_handler &
-  exec yarn snek-functions server -p $SNEK_FUNCTIONS_PORT -f $LAMBDA_TASK_ROOT/dist
+  #$LAMBDA_TASK_ROOT/venv/bin/python -m django_iam.proxy_handler &
+  exec yarn snek-functions server -p $SNEK_FUNCTIONS_PORT -f $LAMBDA_TASK_ROOT/dist --forkmeDaddy [`$LAMBDA_TASK_ROOT/venv/bin/python -m django_iam.proxy_handler`,]
 fi
 export _HANDLER="$1"
 
