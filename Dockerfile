@@ -2,7 +2,7 @@ FROM node:18.8.0-slim
 
 LABEL description="This container serves as an entry point for our future Snek Function projects."
 LABEL org.opencontainers.image.source="https://github.com/snek-functions/iam"
-LABEL maintainer="team@snek.at"
+LABEL maintainer="opensource@snek.at"
 
 # Add custom environment variables needed by Django or your settings file here:
 ENV DJANGO_DEBUG=off \
@@ -77,3 +77,6 @@ ENTRYPOINT [ "./entrypoint.sh" ]
 
 # Start in serverless mode
 #CMD [ "app.handler" ]
+
+# SPDX-License-Identifier: (EUPL-1.2)
+# Copyright © 2022 snek.at
