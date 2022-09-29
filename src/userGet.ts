@@ -1,7 +1,17 @@
 import {fn, sendToProxy} from './factory'
 import {IReducedUser} from './interfaces'
 
-const userGet = fn<{}, IReducedUser>(
+export interface UserGetByUserIdArgs {
+  userId: string
+}
+
+export interface UserGetByAliasArgs {
+  alias: string
+}
+
+export type UserGetArgs = UserGetByUserIdArgs | UserGetByAliasArgs
+
+const userGet = fn<UserGetArgs, IReducedUser>(
   async (args, snekApi) => {
     console.log('args', args)
     const res: IReducedUser = await sendToProxy('userGet', args)
