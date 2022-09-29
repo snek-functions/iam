@@ -4,7 +4,7 @@ import {IUser} from './interfaces'
 const usersUpdate = fn<
   {
     userId: string
-    email: string
+    email?: string
     password?: string
     firstName?: string
     lastName?: string

@@ -57,6 +57,8 @@ def function_handler(message: ProxyMessage):
 
     elif message.fnName == 'usersUpdate':
         user_id = message.data.get("userId")
+        email = message.data.get("email")
+        password = message.data.get("password")
         first_name = message.data.get("firstName")
         last_name = message.data.get("lastName")
         is_active = message.data.get("isActive") == "true"
@@ -66,8 +68,23 @@ def function_handler(message: ProxyMessage):
         # user.is_active=True,
         # user.save()
 
-        user.details.first_name = first_name or ""
-        user.details.last_name = last_name or ""
+        # This may not be the best way to do this but it works for now
+        # Update values if they are not None
+        if email is not None:
+            user.email = email
+        if first_name is not None:
+            user.details.first_name = first_name
+        if last_name is not None:
+            user.details.last_name = last_name
+        if is_active is not None:
+            user.is_active = is_active
+
+        # Update password if it is not None
+        if password is not None:
+            user.set_password(password)
+        
+        
+        user.save()
         user.details.save()
 
         return {
@@ -95,8 +112,17 @@ def function_handler(message: ProxyMessage):
         return export()
 
     elif message.fnName == 'userGet':
-        user = User.objects.get(pk=message.data.get("userId"))
-        alias = Alias.objects.get(user=user)
+
+        user_id = message.data.get("userId")
+        alias = message.data.get("alias")
+
+        if user_id is not None:
+            user = User.objects.get(pk=user_id)
+        elif alias is not None:
+            alias = Alias.objects.get(alias=alias)
+            user = alias.user
+        else:
+            raise 'No user id or alias provided'
 
         return {
             "userId": str(user.pk),
