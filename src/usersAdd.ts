@@ -1,10 +1,11 @@
-import {fn, sendToProxy} from './factory'
-import {IUser} from './interfaces'
+import { fn, sendToProxy } from './factory'
+import { IUser } from './interfaces'
 
 const usersAdd = fn<
   {
     email: string
     password: string
+    userId?: string
   },
   IUser
 >(

@@ -37,7 +37,7 @@ class PermissionsMixin(DjangoPermissionsMixin):
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, permissionsmixin_id, email, password, **extra_fields):
         """
         Create and save a user with the given username, email, and password.
         """
@@ -45,8 +45,13 @@ class UserManager(BaseUserManager):
         # Lookup the real model class from the global app registry so this
         # manager method can be used in migrations. This is fine because
         # managers are by definition working on the real model.
+        
+        if permissionsmixin_id:
+            permissionsmixin = PermissionsMixin(id=uuid.UUID(permissionsmixin_id))
+            user = self.model(permissionsmixin_ptr=permissionsmixin,email=email)
+        else:
+            user = self.model(email=email)
 
-        user = self.model(email=email)
         user.password = make_password(password)
         user.save(using=self._db)
 
@@ -55,8 +60,8 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_user(self, email=None, password=None, **extra_fields):
-        return self._create_user(email, password, **extra_fields)
+    def create_user(self, permissionsmixin_id=None, email=None, password=None, **extra_fields):
+        return self._create_user(permissionsmixin_id, email, password, **extra_fields)
 
     # def create_superuser(self, email=None, password=None, **extra_fields):
     #     extra_fields.setdefault("is_staff", True)
