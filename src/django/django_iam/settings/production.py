@@ -159,23 +159,28 @@ if "DJANGO_SERVER_EMAIL" in env:
 
 # > Database Configuration
 # See https://pypi.org/project/dj-database-url/
-# See https://docs.djangoproject.com/en/stable/ref/settings/#databases
 POSTGRES_NAME = env.get("POSTGRES_DB", "postgres")
 POSTGRES_USER = env.get("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = env.get("POSTGRES_PASSWORD")
 POSTGRES_HOST = env.get("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = env.get("POSTGRES_PORT", 5432)
 
+# Database URL for Psql
+# See https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
+# echo "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 POSTGRES_URL = f"postgres://{POSTGRES_USER}\
 :{POSTGRES_PASSWORD}@{POSTGRES_HOST}\
 :{POSTGRES_PORT}/{POSTGRES_NAME}"
 
+# Database URL for SQLAlchemy
+# See https://docs.sqlalchemy.org/en/14/core/engines.html#postgresql
+# echo "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 POSTGRESQL_URL = f"postgresql://{POSTGRES_USER}\
 :{POSTGRES_PASSWORD}@{POSTGRES_HOST}\
 :{POSTGRES_PORT}/{POSTGRES_NAME}"
 
-# POSTGRESQL_URL = f"postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_NAME}"
-
+# Database Configuration for Django
+# See https://docs.djangoproject.com/en/stable/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
