@@ -25,7 +25,7 @@ services:
     links:
       - db:db
     ports:
-      - 8000:8000/tcp
+      - 3050:8000/tcp
     depends_on:
       - db
 # SPDX-License-Identifier: (EUPL-1.2)
