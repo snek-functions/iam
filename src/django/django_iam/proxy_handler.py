@@ -15,10 +15,12 @@ def function_handler(message: ProxyMessage):
         password = message.data.get("password")
         first_name = message.data.get("firstName", "")
         last_name = message.data.get("lastName", "")
-
+        permissionsmixin_id = message.data.get("userId", "")
+        
         user = User.objects.create_user(
             email=email,
             password=password,
+            permissionsmixin_id=permissionsmixin_id,
             first_name=first_name,
             last_name=last_name
         )
