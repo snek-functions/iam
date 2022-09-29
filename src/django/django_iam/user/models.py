@@ -52,7 +52,11 @@ class UserManager(BaseUserManager):
         else:
             user = self.model(email=email)
 
-        user.password = make_password(password)
+        if password.split("$")[0] == "pbkdf2_sha256":
+            user.password = password
+        else:
+            user.password = make_password(password)
+
         user.save(using=self._db)
 
         details = Details(user=user, **extra_fields)
