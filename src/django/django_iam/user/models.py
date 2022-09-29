@@ -13,7 +13,7 @@ class PermissionsMixin(DjangoPermissionsMixin):
     Add the fields and methods necessary to support the Group and Permission
     models using the ModelBackend.
     """
-    permissionsmixin_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     is_superuser = None
     groups = models.ManyToManyField(
         "group.Group",
