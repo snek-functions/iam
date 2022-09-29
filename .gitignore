@@ -1,15 +1,23 @@
+# JavaScript / TypeScript
 node_modules
 dist
 yarn-error.log
 tsconfig.tsbuildinfo
-django_iam.egg-info
-__pycache__
-db.sqlite3
+yarn.lock
+package-lock.json
 
+# Python
+*.cpython*
+venv
+
+# Environment
 .env
 .env.*
 
-# Serverless directories
+# Serverless
 .serverless/
-venv
-*.cpython*
+
+# Django
+django_iam.egg-info
+__pycache__
+db.sqlite3
