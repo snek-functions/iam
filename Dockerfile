@@ -13,7 +13,7 @@ ENV DJANGO_DEBUG=off \
 # The SNEK Functions configuration (customize as needed):
 ENV LAMBDA_TASK_ROOT=/var/task \
     SNEK_FUNCTIONS_BUILD_DIR=/tmp/snek-functions \
-    SNEK_FUNCTIONS_PORT=8000 \
+    SNEK_FUNCTIONS_PORT=4000 \
     HOME=/var/task
 
 WORKDIR ${LAMBDA_TASK_ROOT}
