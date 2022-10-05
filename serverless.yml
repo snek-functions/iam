@@ -1,4 +1,4 @@
-service: template
+service: iam
 frameworkVersion: '3'
 
 plugins:
@@ -12,6 +12,7 @@ custom:
       Exclude:
         - functions.endpoint.handler
         - provider.environment.CODESPACE_NAME
+        - provider.environment.DJANGO_DEBUG
       ElseExclude:
         - functions.endpoint.image
 
@@ -21,6 +22,13 @@ provider:
 
   environment:
     CODESPACE_NAME: ${env:CODESPACE_NAME, ""}
+    DJANGO_DEBUG: 'on'
+    POSTGRES_DB: app_db
+    POSTGRES_USER: app_user
+    POSTGRES_PASSWORD: changeme
+    POSTGRES_PORT: 5432
+    ENDPOINT_URL_IAM: ${env:ENDPOINT_URL_IAM, ""}
+    DUCKDB_DATA_PATH: '/var/duckdb'
 
   ecr:
     images:
