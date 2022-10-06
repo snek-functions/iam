@@ -28,5 +28,6 @@ services:
       - 3050:8000/tcp
     depends_on:
       - db
+
 # SPDX-License-Identifier: (EUPL-1.2)
-# Copyright © 2022 snek.at
+# Copyright © 2019-2022 snek.at

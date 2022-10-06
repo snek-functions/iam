@@ -1,4 +1,4 @@
-service: snek-functions-graphql-helix-express
+service: iam
 frameworkVersion: '3'
 
 plugins:
@@ -11,6 +11,7 @@ custom:
     - If: '"${self:custom.isOffline}" != "true"'
       Exclude:
         - functions.endpoint.handler
+        - provider.environment.CODESPACE_NAME
         - provider.environment.DJANGO_DEBUG
       ElseExclude:
         - functions.endpoint.image
@@ -18,7 +19,9 @@ custom:
 provider:
   name: aws
   region: eu-central-1
+
   environment:
+    CODESPACE_NAME: ${env:CODESPACE_NAME, ""}
     DJANGO_DEBUG: 'on'
     POSTGRES_DB: app_db
     POSTGRES_USER: app_user
@@ -43,3 +46,6 @@ functions:
       - httpApi:
           path: '*'
           method: '*'
+
+# SPDX-License-Identifier: (EUPL-1.2)
+# Copyright © 2019-2022 snek.at
