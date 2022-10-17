@@ -1,11 +1,13 @@
-import {makeFn} from '@snek-at/functions'
-import type {SpawnOptionsWithoutStdio} from 'child_process'
+import { makeFn } from '@snek-at/functions'
+import type { SpawnOptionsWithoutStdio } from 'child_process'
 
 export const url = process.env.IS_OFFLINE
   ? process.env.CODESPACE_NAME
     ? `https://${process.env.CODESPACE_NAME}-4050.githubpreview.dev/graphql`
     : 'http://localhost:4050/graphql'
-  : `${process.env.ENDPOINT_URL_IAM}`
+  : process.env.ENDPOINT_URL_IAM ||
+  process.env.GATSBY_ENDPOINT_URL_IAM ||
+  ''
 
 export const fn = makeFn({
   url
@@ -68,9 +70,9 @@ export async function spawnChild(
   args?: string[],
   options?: SpawnOptionsWithoutStdio
 ) {
-  const {spawn} = await import('child_process')
-  const {fileURLToPath} = await import('url')
-  const {default: path, dirname} = await import('path')
+  const { spawn } = await import('child_process')
+  const { fileURLToPath } = await import('url')
+  const { default: path, dirname } = await import('path')
 
   const __filename = fileURLToPath(import.meta.url)
   const __dirname = dirname(__filename)
