@@ -99,7 +99,7 @@ def function_handler(message: ProxyMessage):
         }
 
     elif message.fnName == 'usersGet':
-        qs = User.objects.all()
+        qs = User.objects.order_by('-date_joined').all()
 
         return [{
             "userId": str(user.pk),
