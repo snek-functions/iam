@@ -1,8 +1,8 @@
-import {fn, sendToProxy} from './factory'
+import { fn, sendToProxy } from './factory'
 
 const usersDelete = fn<
   {
-    user_id: string
+    userId: string
   },
   boolean
 >(

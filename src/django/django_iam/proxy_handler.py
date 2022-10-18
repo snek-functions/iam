@@ -13,8 +13,8 @@ def function_handler(message: ProxyMessage):
     if message.fnName == 'usersAdd':
         email = message.data.get("email")
         password = message.data.get("password")
-        first_name = message.data.get("firstName", "")
-        last_name = message.data.get("lastName", "")
+        first_name = message.data.get("firstName", "").upper()
+        last_name = message.data.get("lastName", "").upper()
         permissionsmixin_id = message.data.get("userId", "")
         
         user = User.objects.create_user(
@@ -59,11 +59,13 @@ def function_handler(message: ProxyMessage):
         user_id = message.data.get("userId")
         email = message.data.get("email")
         password = message.data.get("password")
-        first_name = message.data.get("firstName")
-        last_name = message.data.get("lastName")
-        is_active = message.data.get("isActive") == "true"
+        first_name = message.data.get("firstName").upper()
+        last_name = message.data.get("lastName").upper()
+        is_active = message.data.get("isActive") == True
 
-        print(last_name)
+        print(f"Is Active test: {message.data.get('isActive')}")
+        print(f"2 {is_active}")
+        
         user = User.objects.get(pk=user_id)
         # user.is_active=True,
         # user.save()

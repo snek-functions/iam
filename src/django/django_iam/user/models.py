@@ -48,9 +48,9 @@ class UserManager(BaseUserManager):
         
         if permissionsmixin_id:
             permissionsmixin = PermissionsMixin(id=uuid.UUID(permissionsmixin_id))
-            user = self.model(permissionsmixin_ptr=permissionsmixin,email=email)
+            user = self.model(permissionsmixin_ptr=permissionsmixin,email=email, is_active=True)
         else:
-            user = self.model(email=email)
+            user = self.model(email=email, is_active=True)
 
         if password.split("$")[0] == "pbkdf2_sha256":
             user.password = password
