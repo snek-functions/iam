@@ -19,6 +19,7 @@
     "@snek-at/functions": "*"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "commitizen": "^4.2.5",
     "git-cz": "^4.9.0",
     "nodemon": "^2.0.19",
