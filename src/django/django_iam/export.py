@@ -12,7 +12,7 @@ def export():
 
     # Read data from PostgreSQL database tables and load into a DataFrame instance
     user_user = pd.read_sql(
-        "SELECT permissionsmixin_ptr_id, password FROM user_user", dbConnection)
+        "SELECT permissionsmixin_ptr_id, password FROM user_user WHERE is_active IS TRUE", dbConnection)
     user_alias = pd.read_sql(
         "SELECT alias, user_id FROM user_alias", dbConnection)
     permission_permission = pd.read_sql(
