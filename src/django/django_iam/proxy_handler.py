@@ -61,7 +61,7 @@ def function_handler(message: ProxyMessage):
         password = message.data.get("password")
         first_name = message.data.get("firstName", "").capitalize()
         last_name = message.data.get("lastName", "").capitalize()
-        is_active = message.data.get("isActive", True) == True
+        is_active = message.data.get("isActive", None)
         
         user = User.objects.get(pk=user_id)
         # user.is_active=True,
@@ -76,7 +76,7 @@ def function_handler(message: ProxyMessage):
         if last_name is not None:
             user.details.last_name = last_name
         if is_active is not None:
-            user.is_active = is_active
+            user.is_active = is_active == True
 
         # Update password if it is not None
         if password is not None:
