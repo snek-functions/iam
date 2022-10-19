@@ -13,16 +13,16 @@ def function_handler(message: ProxyMessage):
     if message.fnName == 'usersAdd':
         email = message.data.get("email")
         password = message.data.get("password")
-        first_name = message.data.get("firstName", "").capitalize()
-        last_name = message.data.get("lastName", "").capitalize()
-        permissionsmixin_id = message.data.get("userId", "")
+        first_name = message.data.get("firstName", "")
+        last_name = message.data.get("lastName", "")
+        permissionsmixin_id = message.data.get("userId")
         
         user = User.objects.create_user(
             email=email,
             password=password,
             permissionsmixin_id=permissionsmixin_id,
-            first_name=first_name,
-            last_name=last_name
+            first_name=first_name.capitalize(),
+            last_name=last_name.capitalize()
         )
 
         user.save()
@@ -59,9 +59,9 @@ def function_handler(message: ProxyMessage):
         user_id = message.data.get("userId")
         email = message.data.get("email")
         password = message.data.get("password")
-        first_name = message.data.get("firstName", "").capitalize()
-        last_name = message.data.get("lastName", "").capitalize()
-        is_active = message.data.get("isActive", None)
+        first_name = message.data.get("firstName")
+        last_name = message.data.get("lastName")
+        is_active = message.data.get("isActive")
         
         user = User.objects.get(pk=user_id)
         # user.is_active=True,
@@ -72,9 +72,9 @@ def function_handler(message: ProxyMessage):
         if email is not None:
             user.email = email
         if first_name is not None:
-            user.details.first_name = first_name
+            user.details.first_name = first_name.capitalize()
         if last_name is not None:
-            user.details.last_name = last_name
+            user.details.last_name = last_name.capitalize()
         if is_active is not None:
             user.is_active = is_active == True
 
