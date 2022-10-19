@@ -61,10 +61,7 @@ def function_handler(message: ProxyMessage):
         password = message.data.get("password")
         first_name = message.data.get("firstName", "").capitalize()
         last_name = message.data.get("lastName", "").capitalize()
-        is_active = message.data.get("isActive") == True
-
-        print(f"Is Active test: {message.data.get('isActive')}")
-        print(f"2 {is_active}")
+        is_active = message.data.get("isActive", True) == True
         
         user = User.objects.get(pk=user_id)
         # user.is_active=True,
