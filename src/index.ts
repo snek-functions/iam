@@ -1,8 +1,8 @@
-export {default as aliasAvailable} from './aliasAvailable.js'
-export {default as publishAuth} from './publishAuth.js'
-export {default as usersAdd} from './usersAdd.js'
+export {default as aliasAvailable} from './aliasCheck.js'
+export {default as publishAuth} from './authenticationPublish.js'
+export {default as usersAdd} from './userCreate.js'
 export {default as usersDelete} from './usersDelete.js'
-export {default as usersGet} from './usersGet.js'
+export {default as usersGet} from './users.js'
 export {default as userGet} from './userGet.js'
 export {default as usersUpdate} from './usersUpdate.js'
 

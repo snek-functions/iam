@@ -1,6 +1,6 @@
 import {fn, sendToProxy} from './factory'
 
-const aliasAvailable = fn<
+const aliasCheck = fn<
   {
     alias: string
   },
@@ -9,12 +9,12 @@ const aliasAvailable = fn<
   async (args, snekApi) => {
     console.log('args', args)
 
-    return sendToProxy('aliasAvailable', args)
+    return sendToProxy('aliasCheck', args)
   },
   {
-    name: 'aliasAvailable',
+    name: 'aliasCheck',
     decorators: []
   }
 )
 
-export default aliasAvailable
+export default aliasCheck

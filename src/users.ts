@@ -1,10 +1,10 @@
 import {fn, sendToProxy} from './factory'
 import {IReducedUser} from './interfaces'
 
-const usersGet = fn<{}, IReducedUser[]>(
+const users = fn<{}, IReducedUser[]>(
   async (args, snekApi) => {
     console.log('args', args)
-    const res: IReducedUser[] = await sendToProxy('usersGet', args)
+    const res: IReducedUser[] = await sendToProxy('users', args)
 
     if (!Array.isArray(res)) {
       throw new Error('Oh no! Something has gone wrong.')
@@ -13,9 +13,9 @@ const usersGet = fn<{}, IReducedUser[]>(
     return res
   },
   {
-    name: 'usersGet',
+    name: 'users',
     decorators: []
   }
 )
 
-export default usersGet
+export default users
