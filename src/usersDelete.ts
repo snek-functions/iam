@@ -15,6 +15,8 @@ const usersDelete = fn<
       throw new Error('User could not be deleted.')
     }
 
+    await sendToProxy('publishAuth', args)
+
     return res
   },
   {
